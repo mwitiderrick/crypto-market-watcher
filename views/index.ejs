@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+      <meta http-equiv="refresh" content="5; URL=http://localhost:3000/">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+  
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <div class="navbar navbar-form  navbar-default">
+  <h5>Crypto Market Watcher</h5>
+  <form class="navbar-form navbar-right" role="search">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-default">Sign In</button>
+</form>
+</div>
+    <div class="jumbotron">
+  <h1>Crypto Market Watcher</h1>      
+</div>
+
+<div class="container">
+  <div class="row">
+  	<div class="col-md-4">
+	<div class = "panel panel-default">
+	   <div class = "panel-body">
+	      <h1>Coin Market Cap</h1>
+	   </div>
+	</div>
+	<span id="coin">$<%= exchange1[0]['price_usd'] %><span>
+  	</div> 
+  	<div class="col-md-4">
+	<div class = "panel panel-default">
+	   <div class = "panel-body">
+	      <h1>Coin Desk</h1>
+	   </div>
+	</div>
+	<span id="coin">$<%= exchange2['bpi']['USD']['rate'] %><span>
+  	</div>
+  	<div class="col-md-4">
+	<div class = "panel panel-default">
+	   <div class = "panel-body">
+	      <h1>Bockchain Info</h1>
+	   </div>
+	</div>
+	<span id="coin">$<%= exchange3['USD']['last'] %><span>
+  	</div>   
+</div>
+</div>
   </body>
 </html>
