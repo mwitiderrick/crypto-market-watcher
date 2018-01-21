@@ -2,28 +2,49 @@ import express from 'express';
 import request from 'request';
 const router = express.Router();
 
-router.get('/', (req, res) => {
-request('https://api.coinmarketcap.com/v1/ticker/bitcoin',function (error, response, exchange1) {
-	if (!error && response.statusCode == 200) {
-			var obj1 = JSON.parse(exchange1)
-			}
-	request('https://api.coindesk.com/v1/bpi/currentprice.json', function (error, response, exchange2) {
-	if (!error && response.statusCode == 200) {
-		var obj2 = JSON.parse(exchange2);
-		}
-	request('https://blockchain.info/ticker', function (error, response, exchange3) {
-	if (!error && response.statusCode == 200) {
-		var obj3 = JSON.parse(exchange3);
-		res.render('index', {
-		exchange1: obj1,
-		exchange2: obj2,
-		exchange3: obj3
-		});
-		}
+var passport = require('passport');
+var Strategy = require('passport-facebook').Strategy;
+passport.use(new Strategy({
+    clientID: '',
+    clientSecret: '',
+    callbackURL: 'http://localhost:3000/'
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    return cb(null, profile);
+  }));
 
-	});
-			});
-				});  
-					});
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+router.use(passport.initialize());
+router.use(passport.session());
+
+// router.get('/login',
+//   function(req, res){
+//     res.render('login');
+//   });
+
+router.get('/facebook/',
+  passport.authenticate('facebook'));
+
+router.get('/login/facebook/return', 
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+router.get('/', (req, res) => {
+	res.render('index')
+});
 
 export default router;
+
+

@@ -1,37 +1,79 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <meta http-equiv="refresh" content="5; URL=http://localhost:3000/">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   
   </head>
   <body>
+
   <div class="navbar navbar-form  navbar-default">
-  <h5>Crypto Market Watcher</h5>
-  <form class="navbar-form navbar-right" role="search">
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Email">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Password">
-  </div>
-  <button type="submit" class="btn btn-default">Sign In</button>
+  <h5>Bitcoin Market Watcher</h5>
+  
+  <a href="/facebook"><button type="submit" class="btn btn-default">Sign In with Facebook</button></a>
 </form>
 </div>
     <div class="jumbotron">
   <h1>Crypto Market Watcher</h1>      
 </div>
 
+<script type="text/javascript">
+	let exchanges = [
+    {name:"Okcoin",url:"https://www.okcoin.com/api/v1/ticker.do?symbol=btc_usd"},
+    {name:"coinDesk",url:"https://api.coindesk.com/v1/bpi/currentprice.json"},
+    {name:"Blockchain",url:"https://blockchain.info/ticker"}
+    ] 
+
+function fetchCoinPrices(url,name){
+		fetch(url)
+  .then(
+    function(response) {
+      if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          response.status);
+        return;
+      }
+
+      // Examine the text in the response
+      response.json().then(function(data) {
+       let coin =  document.getElementById(name)
+       coin.style.fontWeight = 'bold'
+       coin.style.fontSize = 'x-large'
+       coin.textContent = '$'+jsonify(name,data)
+      });
+    }
+   )
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+  });
+}
+ 
+function jsonify(name,data){
+	if(name == 'Okcoin'){
+       		return data.ticker.last
+       }else if(name == 'coinDesk'){
+       		return data.bpi.USD.rate
+       }else if (name == 'Blockchain'){
+       		return data.USD.last
+       }
+}
+ setInterval(function(){
+ 	exchanges.forEach(function(exchange){
+ 		fetchCoinPrices(exchange.url, exchange.name)
+ 	})
+ },5000)
+
+</script>
 <div class="container">
   <div class="row">
   	<div class="col-md-4">
 	<div class = "panel panel-default">
 	   <div class = "panel-body">
-	      <h1>Coin Market Cap</h1>
+	      <h1>OkCoin</h1>
 	   </div>
 	</div>
-	<span id="coin">$<%= exchange1[0]['price_usd'] %><span>
+	<span id="Okcoin"><span>
   	</div> 
   	<div class="col-md-4">
 	<div class = "panel panel-default">
@@ -39,7 +81,7 @@
 	      <h1>Coin Desk</h1>
 	   </div>
 	</div>
-	<span id="coin">$<%= exchange2['bpi']['USD']['rate'] %><span>
+	<span id="coinDesk"><span>
   	</div>
   	<div class="col-md-4">
 	<div class = "panel panel-default">
@@ -47,7 +89,7 @@
 	      <h1>Bockchain Info</h1>
 	   </div>
 	</div>
-	<span id="coin">$<%= exchange3['USD']['last'] %><span>
+	<span id="Blockchain"><span>
   	</div>   
 </div>
 </div>
