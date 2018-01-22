@@ -7,8 +7,8 @@ let exchanges = [
 function fetchPrices(url,name){
 	const wss = new WebSocket(url)
 	let coin = document.getElementById(name)
-	coin.fontWeight = 'bold'
-	coin.fontSize ='x-large'
+	coin.style.fontWeight = 'bold'
+	coin.style.fontSize ='x-large'
 	wss.onmessage = (msg) =>{
 	prices = jsonify(name,JSON.parse(msg.data))
 	if(prices){
