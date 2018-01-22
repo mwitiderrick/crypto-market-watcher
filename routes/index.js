@@ -5,8 +5,8 @@ const router = express.Router();
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
-    clientID: '',
-    clientSecret: '',
+    clientID: '1532856283496325',
+    clientSecret: '330aae67e7a9be6d9156ff641cac66ba',
     callbackURL: 'http://localhost:3000/'
   },
   function(accessToken, refreshToken, profile, cb) {
