@@ -57,7 +57,8 @@ function jsonify(name,prices){
        }
 }	
 
-fetchPrices('wss://real.okcoin.com:10440/websocket','Okcoin')
-fetchPrices('wss://api.bitfinex.com/ws/2','bitFinnex')
-fetchPrices('wss://spotusd-wsp.btcc.com/','coinApi')
+exchanges.forEach(function(exchange){
+ 		fetchPrices(exchange.url, exchange.name)
+ 	})
+
  
