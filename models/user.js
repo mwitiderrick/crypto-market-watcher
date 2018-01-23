@@ -1,8 +1,29 @@
 var Sequelize = require('sequelize');
 var bcrypt = require('bcrypt');
-
+var DB_NAME = 'crypto'
+var USERNAME = 'postgres'
+var PASSWORD =''
 // create a sequelize instance with our local postgres database information.
-var sequelize = new Sequelize('postgres://postgres@localhost:5432/crypto');
+var sequelize = new Sequelize(
+  DB_NAME,
+  USERNAME, 
+  PASSWORD,
+  {
+    host: '127.0.0.1',
+    dialect: 'pgsql',
+    logging: false,
+    freezeTableName: true,
+    operatorsAliases: {
+      $and: Op.and,
+      $or: Op.or,
+      $eq: Op.eq,
+      $gt: Op.gt,
+      $lt: Op.lt,
+      $lte: Op.lte,
+      $like: Op.like
+    }
+  }
+);
 
 // setup User model and its fields.
 var User = sequelize.define('users', {
