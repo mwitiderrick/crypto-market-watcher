@@ -10,9 +10,9 @@ function fetchPrices(url,name){
 	coin.style.fontWeight = 'bold'
 	coin.style.fontSize ='x-large'
 	wss.onmessage = (msg) =>{
-	prices = jsonify(name,JSON.parse(msg.data))
+	prices = jsonifi(name,JSON.parse(msg.data))
 	if(prices){
-	coin.textContent = '$'+ prices
+	coin.textContent = '$'+ parseFloat(prices).toFixed(2)
 	}
 	
 							}
@@ -45,11 +45,11 @@ function fetchPrices(url,name){
 							}
 
 
-function jsonify(name,prices){
+function jsonifi(name,prices){
 	if(name == 'Okcoin'){
        		return prices[0]["data"]["last"]
        }else if(name == 'bitFinnex'){
-       		// return prices[1][6]
+       		return prices[1][6]
        }else if (name == 'coinApi'){
        		return prices.Last
        }else {
